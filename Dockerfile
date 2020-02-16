@@ -17,16 +17,16 @@ COPY . .
 ARG env=docker
 ENV ENV_CONFIG=$env
 
-ARG API_URL=//127.0.0.1:8080/api/v1/
+ARG API_URL=https://host-01.polkascan.io/kusama/api/v1/
 ENV API_URL=$API_URL
 
-ARG NETWORK_NAME=Dev
+ARG NETWORK_NAME=Kusama
 ENV NETWORK_NAME=$NETWORK_NAME
 
-ARG NETWORK_TOKEN_SYMBOL=DOT
+ARG NETWORK_TOKEN_SYMBOL=KSM
 ENV NETWORK_TOKEN_SYMBOL=$NETWORK_TOKEN_SYMBOL
 
-ARG NETWORK_TOKEN_DECIMALS=15
+ARG NETWORK_TOKEN_DECIMALS=12
 ENV NETWORK_TOKEN_DECIMALS=$NETWORK_TOKEN_DECIMALS
 
 RUN npm run ng build -- --configuration=${ENV_CONFIG} --output-path=dist
@@ -40,7 +40,7 @@ FROM nginx:1.14.1-alpine
 RUN rm -rf /etc/nginx/conf.d/*
 
 ## Copy our default nginx config
-COPY nginx/polkascan-prod.conf /etc/nginx/conf.d/
+COPY nginx/polkascan-gui.conf /etc/nginx/conf.d/
 
 ## Remove default nginx website
 RUN rm -rf /usr/share/nginx/html/*
